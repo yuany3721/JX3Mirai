@@ -32,7 +32,7 @@ public abstract class Buffer {
             objIn.close();
             System.out.println("Successfully loaded " + name);
         } catch (Exception e) {
-            System.out.println("No " + name + " exists");
+            System.out.println("Reading " + name + " stream error");
         }
         return object;
     }

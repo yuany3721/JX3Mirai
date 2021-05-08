@@ -13,7 +13,6 @@ import java.util.Set;
  */
 @Buf(bufName = "auth")
 public class FunctionSwitchBuffer extends Buffer {
-    private static final FunctionSwitchBuffer instance = new FunctionSwitchBuffer();    // 单例
     private static final Map<Long, Map<String, Boolean>> AUTH_MAP = new HashMap<>();    // 权限缓存
     private static final Set<String> functionSet = new HashSet<>();     // 功能列表
     private static final Map<String, String> functionUsageMap = new HashMap<>();   // 功能使用说明
@@ -25,14 +24,18 @@ public class FunctionSwitchBuffer extends Buffer {
     private FunctionSwitchBuffer() {
         // 读取权限缓存AUTH_MAP
         Map<Long, Map<String, Boolean>> temp = (Map<Long, Map<String, Boolean>>) read();
-        for (Long contact : temp.keySet()) {
-            AUTH_MAP.put(contact, temp.get(contact));
-        }
+        if (temp != null && temp.size() > 0)
+            for (Long contact : temp.keySet()) {
+                AUTH_MAP.put(contact, temp.get(contact));
+            }
         // 读取功能列表 functionSet
         functionSet.addAll(AnnotationUtil.getFunctionSet());
         // 设置使用说明 functionUsageMap
         AnnotationUtil.setUsageMap(functionUsageMap);
     }
+
+    // 放在构造方法后，避免clinit、init报空指针错误
+    private static final FunctionSwitchBuffer instance = new FunctionSwitchBuffer();    // 单例
 
     /**
      * 单例
