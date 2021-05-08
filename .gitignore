@@ -9,3 +9,7 @@ buildNumber.properties
 .mvn/timing.properties
 # https://github.com/takari/maven-wrapper#usage-without-binary-jar
 .mvn/wrapper/maven-wrapper.jar
+/src/main/resources/接口文档.html
+/src/main/resources/device.json
+/cache/
+/src/main/java/top/yuany3721/JX3Mirai/util/BaseProperties.java
