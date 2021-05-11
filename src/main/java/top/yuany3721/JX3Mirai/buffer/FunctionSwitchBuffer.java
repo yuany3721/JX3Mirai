@@ -131,7 +131,7 @@ public class FunctionSwitchBuffer extends Buffer {
             try {
                 instance.flush(AUTH_MAP);
             } catch (Exception e) {
-                return "开启中遇到未知错误";
+                return "【开启中遇到未知错误】";
             }
             return "成功开启：" + function;
         }

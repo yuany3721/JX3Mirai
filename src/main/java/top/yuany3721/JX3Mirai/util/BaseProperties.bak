@@ -5,6 +5,7 @@ import net.mamoe.mirai.utils.DeviceInfo;
 public class BaseProperties {
     public static Long qq = bot的qq号;
     public static String password = bot的密码;
+    public static String botAlias = bot的别名;
     public static DeviceInfo deviceInfo = new DeviceInfo(你的deviceInfo);
     public static Integer messageBufferLength = 5; // 消息缓存最大条数
     public static Integer retryTimes = 5; // 项目启动配置失败时最大重复次数

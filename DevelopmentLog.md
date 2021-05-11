@@ -1,6 +1,26 @@
 # 开发日志
 ## demo v0.1
+### 2021年5月11日
+- 移除无用的Pair工具类
+---
+- 新增禁言管理、禁言时长缓存
+- 修复缓存Buffer找不到缓存文件时缓存失效的问题
+---
+- @Function注解新增visible、needAdmin、needBotAdmin属性，现在只有visible=true(default)的功能才会被放入功能列表
+- 新增权限管理，可设置是否需要管理员操作、bot是否需要管理员权限
+---
+- 修改function包下父类及接口类类名，使之更符合实际功能
+```shell
+# function接口
+BaseFunction --> FunctionInterface
+# 验证群功能是否执行的验证器
+FunctionSwitch --> GroupFunctionValidator
+```
+- function包内新增子包basic，用于存放功能抽象类及接口类
+- 新增BaseProperties -- botAlias属性
 ### 2021年5月8日
+- 建立仓库 [JX3Mirai](https://github.com/yuany3721/JX3Mirai/) ，并发布demo v0.1 Pre Release
+---
 - 建立缓存buffer包和@Buf注解，提取Buffer父类
 ---
 - 完善JavaDoc

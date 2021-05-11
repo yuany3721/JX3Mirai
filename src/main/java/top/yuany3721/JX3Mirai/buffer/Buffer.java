@@ -20,9 +20,16 @@ public abstract class Buffer {
         if (name.length() < 1)
             return null;    // 避免奇怪的Exception
         Object object = null;
-        URL url = FunctionSwitchBuffer.class.getClassLoader().getResource("buf/" + name + ".buf");
+        URL url = this.getClass().getResource("buf/" + name + ".buf");
         if (url == null) {
             System.out.println("No " + name + " exists");
+            try {
+                //noinspection ResultOfMethodCallIgnored
+                 new File(FunctionSwitchBuffer.class.getClassLoader().getResource("").getPath()+ "buf/" + name + ".buf").createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
             return null;
         }
         File file = new File(url.getPath());

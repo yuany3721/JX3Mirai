@@ -74,7 +74,8 @@ public class AnnotationUtil {
         for (Class<?> clazz : annotationUtil.getAnnotatedClass(Function.class)) {
             Annotation[] annotations = clazz.getDeclaredAnnotations();
             for (Annotation annotation : annotations) {
-                functionSet.add(((Function) annotation).name());
+                if (((Function) annotation).visible())
+                    functionSet.add(((Function) annotation).name());
             }
         }
         return functionSet;
@@ -91,7 +92,8 @@ public class AnnotationUtil {
         for (Class<?> clazz : annotationUtil.getAnnotatedClass(Function.class)) {
             Annotation[] annotations = clazz.getDeclaredAnnotations();
             for (Annotation annotation : annotations)
-                map.put(((Function) annotation).name(), ((Function) annotation).usage());
+                if (((Function) annotation).visible())
+                    map.put(((Function) annotation).name(), ((Function) annotation).usage());
         }
     }
 

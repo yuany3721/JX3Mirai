@@ -17,8 +17,9 @@ public class Application {
                         {
                             // 设置device.json
                             setDeviceInfo(bot -> BaseProperties.deviceInfo);
-                            // 启用列表缓存
-                            enableContactCache();
+                            // 启用列表缓存 默认60s
+                            // 启用列表缓存会导致权限更新不及时，出现权限冲突等bug
+                            // enableContactCache();
                             // 重定向日志 for test only
                             // 请在打jar包前把它注释掉，不然会在nohup java -jar日志重定向时产生不明确后果
                             // redirectBotLogToDirectory(new File("src/main/java/resources"));

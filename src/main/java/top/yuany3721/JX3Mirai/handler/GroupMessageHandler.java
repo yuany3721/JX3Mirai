@@ -6,10 +6,9 @@ import net.mamoe.mirai.event.events.MessageEvent;
 import net.mamoe.mirai.message.data.*;
 import org.jetbrains.annotations.NotNull;
 import top.yuany3721.JX3Mirai.buffer.FunctionSwitchBuffer;
-import top.yuany3721.JX3Mirai.function.CrazyRepeater;
-import top.yuany3721.JX3Mirai.function.Hello;
-import top.yuany3721.JX3Mirai.function.Repeater;
+import top.yuany3721.JX3Mirai.function.*;
 import top.yuany3721.JX3Mirai.buffer.MessageBuffer;
+import top.yuany3721.JX3Mirai.util.BaseProperties;
 
 /**
  * Group Message Handler
@@ -29,18 +28,13 @@ public class GroupMessageHandler extends SimpleListenerHost {
         // 纯文本
         PlainText plainText = (PlainText) messageChain.stream().filter(PlainText.class::isInstance).findFirst().orElse(null);
         if (plainText != null) {
-            if (plainText.contentToString().split("[ +]")[0].equals("开启功能"))
-                event.getSubject().sendMessage(FunctionSwitchBuffer.getInstance().openFunction(event.getSubject().getId(), plainText.contentToString().split("[ +]")[1]));
-            else if (plainText.contentToString().split("[ +]")[0].equals("关闭功能"))
-                event.getSubject().sendMessage(FunctionSwitchBuffer.getInstance().closeFunction(event.getSubject().getId(), plainText.contentToString().split("[ +]")[1]));
-            else if (plainText.contentToString().split("[ +]")[0].equals("功能列表"))
-                event.getSubject().sendMessage(FunctionSwitchBuffer.getFunctionList(event.getSubject().getId()));
-            else if (plainText.contentToString().split("[ +]")[0].equals("功能说明"))
-                event.getSubject().sendMessage(FunctionSwitchBuffer.getFunctionUsage(plainText.contentToString().split("[ +]")[1]));
-            else if (plainText.contentToString().contains("海沧") && plainText.contentToString().contains("在"))
-                new Hello().execute(event, plainText);// Hello
-
-
+            String frontMessage = plainText.contentToString().split("[ +]")[0];
+            if (frontMessage.contains("功能") && frontMessage.length() < 5)
+                new FunctionSwitch().execute(event, plainText); // 功能管理
+            if (frontMessage.contains("禁言") && frontMessage.length() < 5)
+                new Mute().execute(event, messageChain); // 禁言管理
+            else if (plainText.contentToString().contains(BaseProperties.botAlias) && plainText.contentToString().contains("在"))
+                new Hello().execute(event, plainText); // Hello
         }
         // 自定义图片
         Image image = (Image) messageChain.stream().filter(Image.class::isInstance).findFirst().orElse(null);
