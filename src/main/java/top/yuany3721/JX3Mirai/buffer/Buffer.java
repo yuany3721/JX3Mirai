@@ -20,12 +20,16 @@ public abstract class Buffer {
         if (name.length() < 1)
             return null;    // 避免奇怪的Exception
         Object object = null;
-        URL url = this.getClass().getResource("buf/" + name + ".buf");
+        URL url = this.getClass().getResource("../buf/" + name + ".buf");
         if (url == null) {
             System.out.println("No " + name + " exists");
             try {
+                String path = System.getProperty("user.dir");
                 //noinspection ResultOfMethodCallIgnored
-                 new File(FunctionSwitchBuffer.class.getClassLoader().getResource("").getPath()+ "buf/" + name + ".buf").createNewFile();
+                new File(path + "/buf/").mkdirs();
+                System.out.println(path + "/buf/" + name + ".buf");
+                //noinspection ResultOfMethodCallIgnored
+                new File(path + "/buf/" + name + ".buf").createNewFile();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -52,10 +56,11 @@ public abstract class Buffer {
     protected void flush(Object obj) throws IOException {
         if (this.getClass().getAnnotation(Buf.class).bufName().length() < 1)
             return;    // 避免奇怪的Exception
-        URL url = FunctionSwitchBuffer.class.getClassLoader().getResource("buf/" + this.getClass().getAnnotation(Buf.class).bufName() + ".buf");
-        if (url == null)
+        String path = System.getProperty("user.dir");
+        String name = this.getClass().getAnnotation(Buf.class).bufName();
+        if (path == null)
             throw new FileNotFoundException();
-        File file = new File(url.getFile());
+        File file = new File(path + "/buf/" + name + ".buf");
         ObjectOutputStream objOut = new ObjectOutputStream(new FileOutputStream(file));
         objOut.writeObject(obj);
         objOut.flush();

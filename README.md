@@ -23,3 +23,6 @@ mvn clean
 mvn package
 ```
 
+***You should run `java -jar` in the folder where your .jar is located*** (because of the buf files )
+
+
