@@ -30,8 +30,19 @@ public class Mute extends MessageFunctionValidator implements FunctionInterface 
             switch (plainText.contentToString().split("[ +]")[0]) {
                 case "禁言":
                     if (at != null) {
-                        Objects.requireNonNull(((Group) ((MessageEvent) event).getSubject()).get(at.getTarget())).mute(60 * MuteTimeBuffer.getInstance().getMuteTime(((MessageEvent) event).getSubject().getId()));
-                        ((MessageEvent) event).getSubject().sendMessage(at.plus(new PlainText("已被禁言" + MuteTimeBuffer.getInstance().getMuteTime(((MessageEvent) event).getSubject().getId())) + "分钟\n修改默认禁言时间：禁言时间 分钟数"));
+                        if (at.getTarget() == BaseProperties.qq) {
+                            ((MessageEvent) event).getSubject().sendMessage("【错误的禁言对象】\n" + BaseProperties.botAlias + "不能禁言自己");
+                            break;
+                        }
+                        if (Objects.requireNonNull(((Group) ((MessageEvent) event).getSubject()).get(at.getTarget())).getPermission().getLevel() == 0) {
+                            ((MessageEvent) event).getSubject().sendMessage("【错误的禁言对象】\n" + BaseProperties.botAlias + "不能禁言管理员或群主");
+                            break;
+                        }
+                        int time = MuteTimeBuffer.getInstance().getMuteTime(((MessageEvent) event).getSubject().getId());
+                        if (time > 43199)
+                            time = 43199;  // 禁言时间上限
+                        Objects.requireNonNull(((Group) ((MessageEvent) event).getSubject()).get(at.getTarget())).mute(60 * time);
+                        ((MessageEvent) event).getSubject().sendMessage(at.plus(new PlainText("已被禁言" + time) + "分钟\n修改默认禁言时间：禁言时间 分钟数"));
                     } else {
                         ((MessageEvent) event).getSubject().sendMessage("【错误的解除禁言对象】\n使用范例：禁言@" + BaseProperties.botAlias);
                     }
