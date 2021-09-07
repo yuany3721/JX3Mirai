@@ -17,7 +17,7 @@
 ---
 - 新增禁言管理、禁言时长缓存
 - 修复缓存Buffer找不到缓存文件时缓存失效的问题
----
+---p
 - @Function注解新增visible、needAdmin、needBotAdmin属性，现在只有visible=true(default)的功能才会被放入功能列表
 - 新增权限管理，可设置是否需要管理员操作、bot是否需要管理员权限
 ---

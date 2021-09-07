@@ -2,10 +2,10 @@ package top.yuany3721.JX3Mirai.listener;
 
 import net.mamoe.mirai.Bot;
 import net.mamoe.mirai.event.SimpleListenerHost;
-import net.mamoe.mirai.event.events.GroupMessageEvent;
-import net.mamoe.mirai.event.events.GroupTempMessageEvent;
-import net.mamoe.mirai.event.events.StrangerEvent;
+import net.mamoe.mirai.event.events.*;
+import top.yuany3721.JX3Mirai.handler.FriendMessageHandler;
 import top.yuany3721.JX3Mirai.handler.GroupMessageHandler;
+import top.yuany3721.JX3Mirai.handler.GroupMessagePostSendHandler;
 import top.yuany3721.JX3Mirai.handler.StrangerMessageHandler;
 
 public class ListenerLoader {
@@ -35,8 +35,11 @@ public class ListenerLoader {
         bot.getLogger().verbose("Loading listeners......");
         // 群组消息处理器
         handlerLoader(bot, GroupMessageEvent.class, GroupMessageHandler.class);
+        handlerLoader(bot, GroupMessagePostSendEvent.class, GroupMessagePostSendHandler.class);
         // 陌生人消息处理器
         handlerLoader(bot, StrangerEvent.class, StrangerMessageHandler.class);
         handlerLoader(bot, GroupTempMessageEvent.class, StrangerMessageHandler.class);
+        // 好友消息处理器
+        handlerLoader(bot, FriendMessageEvent.class, FriendMessageHandler.class);
     }
 }

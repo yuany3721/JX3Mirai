@@ -5,9 +5,8 @@ import net.mamoe.mirai.event.SimpleListenerHost;
 import net.mamoe.mirai.event.events.MessageEvent;
 import net.mamoe.mirai.message.data.*;
 import org.jetbrains.annotations.NotNull;
-import top.yuany3721.JX3Mirai.buffer.FunctionSwitchBuffer;
-import top.yuany3721.JX3Mirai.function.*;
 import top.yuany3721.JX3Mirai.buffer.MessageBuffer;
+import top.yuany3721.JX3Mirai.function.*;
 import top.yuany3721.JX3Mirai.util.BaseProperties;
 
 /**
@@ -31,8 +30,10 @@ public class GroupMessageHandler extends SimpleListenerHost {
             String frontMessage = plainText.contentToString().split("[ +]")[0];
             if (frontMessage.contains("功能") && frontMessage.length() < 5)
                 new FunctionSwitch().execute(event, plainText); // 功能管理
-            if (frontMessage.contains("禁言") && frontMessage.length() < 5)
+            else if (frontMessage.contains("禁言") && frontMessage.length() < 5)
                 new Mute().execute(event, messageChain); // 禁言管理
+            else if (plainText.contentToString().equals("涩图呢") || plainText.contentToString().contains("无内鬼"))
+                new Setu().execute(event, plainText); // 涩图推送
             else if (plainText.contentToString().contains(BaseProperties.botAlias) && plainText.contentToString().contains("在"))
                 new Hello().execute(event, plainText); // Hello
         }
