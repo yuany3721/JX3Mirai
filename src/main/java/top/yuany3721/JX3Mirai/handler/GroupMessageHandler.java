@@ -32,7 +32,7 @@ public class GroupMessageHandler extends SimpleListenerHost {
                 new FunctionSwitch().execute(event, plainText); // 功能管理
             else if (frontMessage.contains("禁言") && frontMessage.length() < 5)
                 new Mute().execute(event, messageChain); // 禁言管理
-            else if (plainText.contentToString().equals("涩图呢") || plainText.contentToString().contains("无内鬼"))
+            else if (plainText.contentToString().contains("涩图") || plainText.contentToString().contains("无内鬼"))
                 new Setu().execute(event, plainText); // 涩图推送
             else if (plainText.contentToString().contains(BaseProperties.botAlias) && plainText.contentToString().contains("在"))
                 new Hello().execute(event, plainText); // Hello
@@ -54,7 +54,7 @@ public class GroupMessageHandler extends SimpleListenerHost {
         // 小程序
         LightApp lightApp = (LightApp) messageChain.stream().filter(LightApp.class::isInstance).findFirst().orElse(null);
         // 语音
-        Voice voice = (Voice) messageChain.stream().filter(Voice.class::isInstance).findFirst().orElse(null);
+        Audio audio = (Audio) messageChain.stream().filter(Audio.class::isInstance).findFirst().orElse(null);
         // 商城表情
         MarketFace marketFace = (MarketFace) messageChain.stream().filter(MarketFace.class::isInstance).findFirst().orElse(null);
         // 合并转发

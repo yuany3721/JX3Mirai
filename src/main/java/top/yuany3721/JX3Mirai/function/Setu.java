@@ -13,17 +13,28 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * Setu
  */
-@Function(name = "涩图", usage = "涩图呢/无内鬼")
+@Function(name = "涩图", usage = "涩图/无内鬼")
 public class Setu extends MessageFunctionValidator implements FunctionInterface {
 
-    String SETU_PATH = "G:\\pixiv\\test";
+    //    String SETU_PATH = "G:\\pixiv\\test";
+    String SETU_PATH = "/usr/pixiv";
 
     @Override
     protected void operate(Event event, Object message) {
+        if (((MessageEvent) event).getMessage().contentToString().equals("涩图三连")) {
+            for (int i = 0; i < 3; i++) {
+                pushImgOnce(event);
+            }
+        } else
+            pushImgOnce(event);
+    }
+
+    private void pushImgOnce(Event event) {
         File imgPath = new File(SETU_PATH);
         if (!imgPath.exists() || !imgPath.isDirectory()) {
             ((MessageEvent) event).getBot().getLogger().error("涩图文件夹无了！！！");
@@ -34,8 +45,9 @@ public class Setu extends MessageFunctionValidator implements FunctionInterface 
             ((MessageEvent) event).getSubject().sendMessage(new PlainText("没了没了一滴都没有了（悲"));
             return;
         }
-        File imgFile = Objects.requireNonNull(imgPath.listFiles())[0];
-        FileInputStream imgInputStream = null;
+        Random rand = new Random();
+        File imgFile = Objects.requireNonNull(imgPath.listFiles())[rand.nextInt(Objects.requireNonNull(imgPath.listFiles()).length)];
+        FileInputStream imgInputStream;
         try {
             imgInputStream = new FileInputStream(imgFile);
         } catch (FileNotFoundException e) {
